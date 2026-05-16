@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/SamplesResources/Scenes/0-Main.unity
     guid: a09cb257d566c489595b16ab37547666
   - enabled: 1
-    path: Assets/HW18_AR_Test/HW18_AR_Test.unity
-    guid: 3c71d9fd17e92844fbe339a12be1f365
+    path: Assets/HW21_Canvas/HW21_Canvas.unity
+    guid: 53837aaccb59f9949965ce75a736ad20
   m_configObjects: {}

@@ -23,3 +23,4 @@
 .DS_Store
 Thumbs.db
 Packages/*.tgz
+Assets/Editor/Migration/com.ptc.vuforia.engine-11.4.4.tgz
