@@ -18,12 +18,13 @@
 | HW20 | HW20_LimitedBody 브랜치 | Limited Body 관련 Unity 프로젝트 |
 | HW21 | main 브랜치 | Unity Canvas Render Mode 비교 과제 |
 | HW23 | main 브랜치 | 플레이어 및 월드 Transform 상태 저장/불러오기 과제 |
+| 출석인정과제23 | main 브랜치 | GPS 기반 장소 진입 및 지속 상태 저장/복원 과제 |
 
 ## 브랜치 안내
 
 ### main 브랜치
 
-`main` 브랜치에는 HW19, HW21, HW23 과제가 업로드되어 있습니다.
+`main` 브랜치에는 HW19, HW21, HW23, 출석인정과제23 과제가 업로드되어 있습니다.
 
 ### HW20_LimitedBody 브랜치
 
@@ -109,3 +110,58 @@ HW23 과제 씬은 다음 경로에 있습니다.
 
 Player 오브젝트에는 회전 상태를 쉽게 확인할 수 있도록 한쪽 옆면에 작은 원형 표시가 붙어 있습니다.  
 이를 통해 저장 후 불러오기 시 Position뿐 아니라 Rotation도 함께 복원되는 것을 확인할 수 있습니다.
+
+## 출석인정과제23 확인 방법
+
+출석인정과제23 과제 파일은 다음 경로에 있습니다.
+
+- `Assets/출석인정과제23/HW23_MobileData/GPS.unity`
+- `Assets/출석인정과제23/HW23_MobileData/HW23_MobileData.unity`
+
+해당 과제는 GPS 기반 위치 조건을 사용하여 특정 장소에 진입했을 때 별도의 MobileData 씬을 활성화하고, 해당 장소에 남겨진 오브젝트 상태를 JSON으로 저장 및 복원하는 실습입니다.
+
+GPS 기준 장소는 다음 좌표로 설정되어 있습니다.
+
+| 항목 | 값 |
+|---|---|
+| 주소 | 서울특별시 서대문구 연희동 745 |
+| 위도 | 37.564102480428 |
+| 경도 | 126.92788532245 |
+| 진입 반경 | 100m |
+
+씬 구성은 다음과 같습니다.
+
+| 씬 | 역할 |
+|---|---|
+| GPS | 현재 GPS 위치를 확인하고 목표 장소 반경 안에 들어오면 MobileData 씬으로 전환 |
+| HW23_MobileData | 장소에 남겨진 오브젝트의 Position, Rotation 변경 및 저장/복원 |
+
+저장 대상 오브젝트는 `PlaceMemoryCube`입니다.  
+해당 오브젝트의 Position과 Rotation이 JSON 형식으로 저장되며, 저장 경로는 Unity의 `Application.persistentDataPath`를 사용합니다.
+
+실행 방법은 다음과 같습니다.
+
+1. Unity에서 `Assets/출석인정과제23/HW23_MobileData/GPS.unity` 씬을 엽니다.
+2. Android 모바일 기기로 빌드하여 실행합니다.
+3. 앱 실행 시 위치 권한을 허용합니다.
+4. GPS 화면에서 Target 좌표, Current 좌표, Radius, Distance를 확인합니다.
+5. 현재 위치가 목표 장소 반경 안에 들어오면 `HW23_MobileData` 씬이 자동으로 활성화됩니다.
+6. `Move Object` 버튼을 눌러 큐브의 위치를 변경합니다.
+7. `Rotate Object` 버튼을 눌러 큐브의 회전을 변경합니다.
+8. `Save` 버튼을 눌러 현재 큐브 상태를 JSON으로 저장합니다.
+9. 앱을 다시 실행하거나 장소에 재진입하면 GPS 씬을 거쳐 MobileData 씬이 활성화됩니다.
+10. MobileData 씬에서 이전에 저장된 큐브의 Position과 Rotation이 복원되는지 확인합니다.
+
+모바일 실행 시 반드시 확인해야 할 내용은 다음과 같습니다.
+
+| 확인 항목 | 설명 |
+|---|---|
+| GPS 위치 확인 | Current 좌표와 Distance 값 표시 |
+| 장소 진입 | 목표 좌표 반경 안에 들어오면 조건 충족 |
+| Scene 자동 활성화 | GPS 씬에서 HW23_MobileData 씬으로 자동 전환 |
+| 오브젝트 상태 변경 | 큐브의 Position, Rotation 변경 |
+| 상태 저장 | Save 버튼으로 JSON 저장 |
+| 상태 복원 | 재실행 또는 재진입 시 이전 상태 복원 |
+
+PC 에디터에서 테스트할 경우 GPS 화면의 `Toggle Simulated Place Entry` 버튼을 사용하여 장소 진입 상황을 시뮬레이션할 수 있습니다.  
+모바일 빌드에서는 실제 GPS 위치 정보를 사용하여 장소 진입 여부를 판단합니다.
